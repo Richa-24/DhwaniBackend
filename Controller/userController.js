@@ -39,11 +39,14 @@ const userController = async (req, res) => {
         else {
             const validatePassword = await bcrypt.compare(password, user.password)
             const authToken = jwt.sign(check, process.env.SECRET_KEY_TO_ACCESS, { expiresIn: '20s' });
-            if (validatePassword) return res.json({
-                message: `${email} logged-in successfully`,
-                user,
-                authToken
-            })
+            if (validatePassword) {
+                res.json({
+                    message: `${email} logged-in successfully`,
+                    user,
+                    authToken
+                })
+                res.cookie('jwt', authToken, { httpOnly: true, maxAge: maxAge * 1000 })
+            }
             else return res.status(400).json({ message: "Wrong password!" })
         }
     } catch (err) {
@@ -51,6 +54,19 @@ const userController = async (req, res) => {
     }
 }
 
+const logout = (req, res) => {
+    try {
+        res.cookie('jwt', '', { maxAge: 1 })
+
+        res.json({
+            message: "user logged out successfully"
+        })
+    }
+    catch (err) {
+        res.status(400).json({ error_message: err.message })
+    }
+}
+
 module.exports = {
-    userController
+    userController, logout
 };

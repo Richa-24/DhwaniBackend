@@ -2,7 +2,7 @@ const express = require("express");
 const { addChild, getChild } = require("../Controller/childController");
 const { addState, getState } = require("../Controller/stateController");
 const { addDistrict, getDistrict } = require("../Controller/districtController");
-const { userController } = require("../Controller/userController")
+const { userController, logout } = require("../Controller/userController")
 const userMiddleware = require("../Middleware/userAuthCheck")
 
 const router = express.Router();
@@ -14,6 +14,7 @@ router.post("/addChild", addChild);
 router.post("/addState", addState);
 router.post("/addDistrict", addDistrict);
 router.post("/login", userController);
+router.get("/logout", logout);
 
 router.use(userMiddleware)
 
