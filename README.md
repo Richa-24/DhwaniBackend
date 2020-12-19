@@ -12,16 +12,16 @@ GET:- "/getState"
 ### 4- Post State
 POST:- "/addState"
 
-### 4- Get District
+### 5- Get District
 GET:- "/getDistrict"
 
-### 5- Post District
+### 6- Post District
 POST:- "/addDistrict"
 
-### 6- Get Child
+### 7- Get Child
 GET:- "/getChild"
 
-### 7- Post Child
+### 8- Post Child
 POST:- "/addChild"
 
 
