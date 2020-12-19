@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const State = new Schema({
-    name: {
+    state: {
         type: String,
         required: true,
         min: 3

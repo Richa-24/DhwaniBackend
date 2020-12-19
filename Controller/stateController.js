@@ -1,11 +1,20 @@
 const State = require("../Model/state");
 
-const addState = (req, res) => {
-    const { name } = req.body
-    const newState = new State({ name })
+const addState = async (req, res) => {
+    try {
+        const { state } = req.body
+        const newDistrict = await new State({ state })
+        newDistrict.save()
 
-    newState.save()
-        .then((data) => res.json(data)).catch(err => console.log("error" + err))
+        res.json({
+            message: `${state} added successfully`
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
 }
 
 const getState = (req, res) => {

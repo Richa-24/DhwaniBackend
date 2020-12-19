@@ -1,15 +1,26 @@
 const District = require("../Model/district");
 
-const addDistrict = (req, res) => {
-    const { name } = req.body
-    const newDistrict = new District({ name })
+const addDistrict = async (req, res) => {
+    try {
+        const { state, district } = req.body
+        const newDistrict = await new District({ state, district })
+        newDistrict.save()
 
-    newDistrict.save()
-        .then((data) => res.json(data)).catch(err => console.log("error" + err))
+        res.json({
+            message: `${district} added successfully`
+        });
+    }
+    catch (err) {
+        res.status(400).json({
+            message: err.message
+        })
+    }
 }
 
 const getDistrict = (req, res) => {
-    District.find().then(items => res.json(items)).catch(err => res.status(400).json({ error: "error occurred" }))
+    District.find()
+        .then(items => res.json(items))
+        .catch(err => res.status(400).json({ message: err.message }))
 }
 
 module.exports = {
